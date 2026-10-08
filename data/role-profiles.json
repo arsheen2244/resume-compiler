@@ -1,0 +1,54 @@
+{
+  "_readme": "Keys are lowercased role titles (see lib/jd.js slugify). Add more roles as needed -- these are intentionally short and are labeled 'medium confidence' in the UI because they are generic, not a real posting.",
+
+  "genai engineer": {
+    "must_have": ["Python", "LLM APIs (OpenAI/Anthropic)", "prompt engineering", "REST APIs", "Git"],
+    "nice_to_have": ["RAG pipelines", "vector databases", "LangChain/LangGraph", "evaluation frameworks (Ragas)", "Docker"],
+    "responsibilities": ["build and evaluate LLM-powered features", "design retrieval pipelines", "measure and improve output quality", "integrate AI into production APIs"]
+  },
+  "ai engineer": {
+    "must_have": ["Python", "machine learning fundamentals", "LLM APIs", "REST APIs", "Git"],
+    "nice_to_have": ["RAG", "fine-tuning", "vector databases", "MLOps tooling", "cloud platforms (AWS/GCP/Azure)"],
+    "responsibilities": ["design and ship AI-powered features", "evaluate model quality", "collaborate with product on AI use cases"]
+  },
+  "ml engineer": {
+    "must_have": ["Python", "scikit-learn or PyTorch/TensorFlow", "SQL", "statistics fundamentals", "Git"],
+    "nice_to_have": ["MLOps (MLflow, model serving)", "feature engineering at scale", "A/B testing", "cloud platforms"],
+    "responsibilities": ["build and productionize ML models", "own the training-to-deployment pipeline", "monitor model performance in production"]
+  },
+  "backend engineer": {
+    "must_have": ["a backend language (Python/Java/Node/Go)", "REST API design", "SQL", "Git", "unit testing"],
+    "nice_to_have": ["Docker", "cloud platforms", "message queues", "caching (Redis)", "system design fundamentals"],
+    "responsibilities": ["design and build backend services", "own data models and APIs", "ensure reliability and performance"]
+  },
+  "full stack developer": {
+    "must_have": ["JavaScript/TypeScript", "a frontend framework (React/Vue)", "a backend framework", "REST APIs", "Git"],
+    "nice_to_have": ["SQL/NoSQL databases", "cloud deployment", "CI/CD", "testing frameworks"],
+    "responsibilities": ["build features across the frontend and backend", "collaborate with design and product", "maintain code quality and tests"]
+  },
+  "sde": {
+    "must_have": ["data structures and algorithms", "a mainstream language (Java/C++/Python)", "OOP fundamentals", "Git"],
+    "nice_to_have": ["system design", "SQL", "cloud platforms", "CI/CD"],
+    "responsibilities": ["design and implement software features", "debug and optimize existing code", "participate in code review"]
+  },
+  "data analyst": {
+    "must_have": ["SQL", "Excel or spreadsheets", "data visualization (Tableau/Power BI)", "statistics fundamentals"],
+    "nice_to_have": ["Python or R", "A/B testing", "dashboarding", "business domain knowledge"],
+    "responsibilities": ["turn raw data into actionable insights", "build and maintain dashboards", "support business decisions with analysis"]
+  },
+  "data scientist": {
+    "must_have": ["Python", "statistics", "SQL", "machine learning fundamentals"],
+    "nice_to_have": ["deep learning", "experiment design (A/B testing)", "cloud ML platforms", "data storytelling"],
+    "responsibilities": ["design experiments and models to answer business questions", "communicate findings to stakeholders", "prototype and validate ML solutions"]
+  },
+  "devops engineer": {
+    "must_have": ["Linux fundamentals", "CI/CD pipelines", "a cloud platform (AWS/GCP/Azure)", "scripting (Bash/Python)"],
+    "nice_to_have": ["Kubernetes", "Terraform/IaC", "monitoring (Prometheus/Grafana)", "container orchestration"],
+    "responsibilities": ["build and maintain deployment pipelines", "ensure system reliability and uptime", "manage cloud infrastructure"]
+  },
+  "qa engineer": {
+    "must_have": ["manual testing fundamentals", "a scripting/test language", "bug tracking tools", "test case design"],
+    "nice_to_have": ["automation frameworks (Selenium/Playwright)", "API testing", "CI/CD integration", "performance testing"],
+    "responsibilities": ["design and execute test plans", "automate regression testing", "track and report defects"]
+  }
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resume Compiler</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">RESUME COMPILER</span>
+      <span class="brand-sub">v2</span>
+    </div>
+    <span class="brand-sub">evidence-checked · not a real ATS</span>
+  </div>
+
+  <h1>Check your resume against a role</h1>
+  <p class="lede">
+    Paste your resume, or upload a PDF. Compare it against a pasted job description, an uploaded JD PDF,
+    or just a role title. Every claimed skill match is checked against your actual text before it counts.
+  </p>
+
+  <div class="input-grid">
+    <div class="editor">
+      <div class="editor-head">
+        <span>RESUME</span>
+        <div class="tabs" data-target="resume">
+          <button type="button" class="tab active" data-mode="paste">Paste</button>
+          <button type="button" class="tab" data-mode="pdf">Upload PDF</button>
+        </div>
+      </div>
+      <textarea id="resumeText" placeholder="Paste your resume text here..." maxlength="20000"></textarea>
+      <div class="file-row" id="resumeFileRow" style="display:none">
+        <input type="file" id="resumeFile" accept="application/pdf" />
+        <span class="file-name" id="resumeFileName">No file chosen</span>
+      </div>
+      <div class="char-count"><span id="resumeCount">0</span> / 20000</div>
+    </div>
+
+    <div class="editor">
+      <div class="editor-head">
+        <span>JOB DESCRIPTION</span>
+        <div class="tabs" data-target="jd">
+          <button type="button" class="tab active" data-mode="paste">Paste</button>
+          <button type="button" class="tab" data-mode="pdf">Upload PDF</button>
+          <button type="button" class="tab" data-mode="role">Role title only</button>
+        </div>
+      </div>
+      <textarea id="jdText" placeholder="Paste the job description here..." maxlength="15000"></textarea>
+      <div class="file-row" id="jdFileRow" style="display:none">
+        <input type="file" id="jdFile" accept="application/pdf" />
+        <span class="file-name" id="jdFileName">No file chosen</span>
+      </div>
+      <div class="role-row" id="jdRoleRow" style="display:none">
+        <input type="text" id="roleTitle" placeholder="e.g. GenAI Engineer" maxlength="80" list="roleSuggestions" />
+        <datalist id="roleSuggestions">
+          <option value="GenAI Engineer"></option>
+          <option value="AI Engineer"></option>
+          <option value="ML Engineer"></option>
+          <option value="Backend Engineer"></option>
+          <option value="Full Stack Developer"></option>
+          <option value="SDE"></option>
+          <option value="Data Analyst"></option>
+          <option value="Data Scientist"></option>
+          <option value="DevOps Engineer"></option>
+          <option value="QA Engineer"></option>
+        </datalist>
+        <p class="role-hint">No real job description -- results use a generic profile for this role and are lower confidence.</p>
+      </div>
+      <div class="char-count"><span id="jdCount">0</span> / 15000</div>
+    </div>
+  </div>
+
+  <div class="run-row">
+    <button id="runBtn">Analyze</button>
+    <span class="run-hint" id="runHint">Your text is sent only to our server, redacted, then to the model.</span>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <div id="output">
+    <div class="verdict" id="verdictBox">
+      <div class="score-num"><span id="scoreNum">0</span><small>/100</small></div>
+      <div class="verdict-mid">
+        <div class="verdict-label">Verdict</div>
+        <div class="verdict-title" id="verdictTitle">-</div>
+        <div class="verdict-desc" id="verdictDesc"></div>
+      </div>
+    </div>
+
+    <div class="banner" id="jdBanner" style="display:none"></div>
+    <div class="banner warn" id="warningsBanner" style="display:none"></div>
+
+    <div class="section-title">Score breakdown</div>
+    <div class="tests" id="breakdownList"></div>
+
+    <div class="section-title">Checks</div>
+    <div class="tests" id="testsList"></div>
+
+    <div class="section-title">Skills</div>
+    <div class="kw-grid">
+      <div class="kw-panel">
+        <h3><span class="dot dot-pass"></span> Matched (evidence-checked)</h3>
+        <div class="tags" id="matchedTags"></div>
+      </div>
+      <div class="kw-panel">
+        <h3><span class="dot dot-warn"></span> Missing</h3>
+        <div class="tags" id="missingTags"></div>
+      </div>
+    </div>
+
+    <div class="section-title">Suggested fixes</div>
+    <div class="fixes" id="fixesList"></div>
+
+    <div class="meta-row" id="metaRow"></div>
+  </div>
+
+  <footer>Resume Compiler v2 &middot; results are an advisory second opinion, not a hiring decision</footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

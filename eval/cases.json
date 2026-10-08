@@ -1,0 +1,19 @@
+{
+  "_readme": "Replace with your own resume/JD pairs before drawing conclusions -- these two are just enough to exercise the harness end to end.",
+  "consistency_cases": [
+    {
+      "id": "c1",
+      "jd": "Backend Engineer: 2+ years with Python, REST APIs, SQL, and Git. Experience with Docker and cloud deployment is a plus.",
+      "resume": "Resume\nContact: [add your own]\n\nEducation\nB.Tech Computer Science, 2026\n\nSkills\nPython, FastAPI, PostgreSQL, Docker, Git, AWS\n\nExperience\n- Built a REST API in FastAPI serving 5,000 requests/day\n- Wrote SQL queries to optimize a slow reporting job, cutting runtime by 40%\n- Containerized the app with Docker and deployed it on AWS EC2\n- Used Git for version control across a 3-person team"
+    }
+  ],
+  "fairness_pairs": [
+    {
+      "id": "f1",
+      "jd": "Backend Engineer: 2+ years with Python, REST APIs, SQL, and Git.",
+      "resume_a": "Rahul Sharma\nB.Tech, IIT Delhi\nSkills: Python, FastAPI, SQL, Git\nBuilt a REST API serving 5,000 requests/day. Wrote SQL queries to optimize a slow job.",
+      "resume_b": "Priya Iyer\nB.Tech, a state engineering college\nSkills: Python, FastAPI, SQL, Git\nBuilt a REST API serving 5,000 requests/day. Wrote SQL queries to optimize a slow job.",
+      "note": "Same content, different name and college prestige. A fair analyzer should score these the same, since name/college are redacted or ignored."
+    }
+  ]
+}
