@@ -1,4 +1,11 @@
-# Resume Compiler
+<div align="center">
+
+# 🧾 Resume Compiler
+
+**An evidence‑checked resume analyzer: the LLM finds things, and the code checks them and computes the score.**
+
+</div>
+
 
 **An evidence-checked resume analyzer.** Paste or upload your resume, add a job description (text or PDF) or just a role title, and get a score you can actually explain: every skill match the LLM claims must be backed by a quote that exists in your resume, and the final number is computed in code, never by the model.
 
@@ -60,46 +67,44 @@ v1 was a thin wrapper around an LLM prompt. v2 treats the model as an **untruste
 
 ## How it works
 
-```
-                     Browser (public/)
-                            |
-              POST /api/analyze  (JSON or multipart/form-data)
-                            |
-                        server.js
-              rate limit -> daily budget -> multer (PDF, memory only)
-                            |
-                 lib/pdf.js (if a PDF was uploaded)
-                 lib/jd.js  (pasted text | curated role profile)
-                            |
-                     lib/analyzer.js
-          -----------------------------------------
-          |                                       |
-   lib/checks.js                          lib/redact.js
-   (deterministic: contact,               (strip PII + name,
-    sections, length,                      detect injection attempts)
-    quantifiable impact,                          |
-    action verbs)                          lib/llm.js  (provider switch)
-          |                               /                     \
-          |                lib/anthropic.js              lib/openai-compat.js
-          |                (Claude)                      (Groq / Ollama / OpenRouter)
-          |                               \                     /
-          |                                lib/schema.js (validate shape)
-          |                                       |
-          |                                lib/evidence.js (verify every
-          |                                claimed quote exists in the resume)
-          -----------------------------------------
-                            |
-                     lib/scoring.js
-           (score computed in code from checks + verified matches)
-                            |
-                        JSON response
-                            |
-                  public/script.js (textContent-only rendering)
+```mermaid
+flowchart TD
+    B(["🌐 Browser · public/"]) -- "POST /api/analyze<br/>(JSON or multipart)" --> S
+    subgraph S["server.js"]
+        RL[Per‑IP rate limit] --> BU[Daily budget] --> MU["multer<br/>(PDF in memory only)"]
+    end
+    MU --> PDF["lib/pdf.js<br/>PDF → text"]
+    MU --> JD["lib/jd.js<br/>pasted JD · JD PDF · role profile"]
+    PDF & JD --> AN[lib/analyzer.js]
+
+    AN --> CH["lib/checks.js<br/>🔒 deterministic: contact · sections ·<br/>length · impact · action verbs"]
+    AN --> RD["lib/redact.js<br/>strip PII + name ·<br/>detect injection"]
+    RD --> LLM{"lib/llm.js<br/>provider switch"}
+    LLM --> AC["lib/anthropic.js<br/>Claude (forced tool call)"]
+    LLM --> OC["lib/openai-compat.js<br/>Groq · Ollama · OpenRouter"]
+    AC & OC --> SC["lib/schema.js<br/>validate · one repair retry"]
+    SC --> EV["lib/evidence.js<br/>✅ every quoted match must<br/>exist in the resume"]
+
+    CH --> SCO["lib/scoring.js<br/>score computed in code"]
+    EV --> SCO
+    SCO --> R(["JSON → public/script.js<br/>textContent‑only rendering"])
 ```
 
 ### The scoring formula (100 points)
 
 The model never outputs a number. It returns structured findings; the server turns them into a score.
+
+```mermaid
+pie showData
+    title Score weights (100 points)
+    "Skill coverage (evidence-verified)" : 40
+    "Role relevance (LLM)" : 20
+    "Contact info" : 10
+    "Section structure" : 10
+    "Quantifiable impact" : 10
+    "Action verbs" : 5
+    "Resume length" : 5
+```
 
 | Component | Points | Source |
 |---|---:|---|
@@ -264,7 +269,15 @@ Two resumes with identical content but different names and college prestige scor
 
 ## Tech stack
 
-Node.js, Express, Multer, pdf-parse, dotenv, vanilla JS/HTML/CSS, Node's built-in test runner. LLMs via the Anthropic Messages API or any OpenAI-compatible chat API.
+| Layer | Technology |
+|------|-----------|
+| Runtime / server | Node.js ≥ 18, Express |
+| Uploads & parsing | Multer (memory storage), pdf-parse |
+| LLM providers | Anthropic Messages API (Claude), or any OpenAI-compatible API: Groq, OpenRouter, Ollama (e.g. Llama 3.2 3B locally) |
+| Reliability | Forced tool calls, schema validation + repair retry, evidence verification, PII redaction, injection detection, rate limit + daily budget |
+| Frontend | Vanilla HTML / CSS / JavaScript (`textContent`-only rendering) |
+| Testing & eval | Node built-in test runner (38 tests), `eval/run_eval.js` consistency + fairness harness |
+| Config | dotenv |
 
 ## License
 
